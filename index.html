@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Busk.co — Before the Stadium Lights, There Was the Street</title>
+  <meta name="description" content="Celebrating the musicians, comedians, and performers who started from nothing — busking for coins before the world heard their name." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:        #0C0A07;
+      --dark-2:      #1C1812;
+      --dark-3:      #2A221A;
+      --amber:       #D4891E;
+      --amber-light: #EFB24A;
+      --ivory:       #F8F4EC;
+      --stone:       #EDE8DF;
+      --text:        #2A2318;
+      --text-light:  #7A7268;
+      --sage:        #6B8C6A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── BANNER ─── */
+    .banner {
+      background: var(--amber);
+      color: var(--dark);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 0.76rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 36px;
+      width: 100%;
+      z-index: 100;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.4s, top 0.3s, padding 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(12,10,7,0.97);
+      top: 0;
+      backdrop-filter: blur(12px);
+      padding: 16px 60px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--amber); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(155deg, #060401 0%, #0C0907 35%, #13100A 65%, #0A0E08 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 40px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 80%, rgba(212,137,30,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 30%, rgba(212,137,30,0.04) 0%, transparent 60%);
+    }
+    .hero-eyebrow {
+      color: var(--amber);
+      font-size: 0.73rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.3s;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      color: white;
+      line-height: 1.08;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.5s;
+      max-width: 900px;
+    }
+    .hero h1 em { color: var(--amber-light); font-style: italic; }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.6);
+      max-width: 580px;
+      line-height: 1.75;
+      margin-bottom: 56px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.7s;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.9s;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--amber);
+      color: var(--dark);
+      padding: 16px 44px;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.75);
+      padding: 16px 44px;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 400;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.4s;
+    }
+    .hero-scroll span {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(212,137,30,0.6), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ─── STATS BAR ─── */
+    .stats-bar {
+      background: var(--amber);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 48px;
+      border-right: 1px solid rgba(12,10,7,0.2);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--dark);
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(12,10,7,0.6);
+      font-weight: 600;
+    }
+
+    /* ─── SHARED SECTION STYLES ─── */
+    .amber-rule {
+      width: 56px;
+      height: 2px;
+      background: var(--amber);
+      margin: 0 auto 28px;
+    }
+    .section-eyebrow {
+      text-align: center;
+      color: var(--amber);
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      text-align: center;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .section-sub {
+      text-align: center;
+      max-width: 580px;
+      margin: 0 auto 64px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ─── ARTISTS GRID ─── */
+    .artists {
+      background: var(--ivory);
+      padding: 100px 40px;
+    }
+    .artists .section-title { color: var(--text); }
+    .artists .section-sub { color: var(--text-light); }
+
+    .artists-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(212,137,30,0.2);
+    }
+    .artist-card {
+      background: white;
+      padding: 44px 36px;
+      transition: background 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .artist-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: left;
+    }
+    .artist-card:hover { background: #fdfbf7; transform: translateY(-3px); }
+    .artist-card:hover::before { transform: scaleX(1); }
+    .artist-era {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .artist-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .artist-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+    .artist-location::before {
+      content: '◉';
+      font-size: 0.55rem;
+      color: var(--amber);
+    }
+    .artist-bio {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+    .artist-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      background: var(--stone);
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    .tag.primary { background: var(--dark-3); color: rgba(239,178,74,0.9); }
+
+    /* ─── STORIES ─── */
+    .stories {
+      background: var(--dark-2);
+      padding: 100px 40px;
+    }
+    .stories .section-title { color: white; }
+    .stories .section-sub { color: rgba(255,255,255,0.45); }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(212,137,30,0.12);
+    }
+    .story-card {
+      background: var(--dark-3);
+      padding: 52px 44px;
+      transition: background 0.3s;
+    }
+    .story-card:hover { background: #332A20; }
+    .story-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: rgba(212,137,30,0.18);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .story-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: white;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .story-artist {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .story-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.85;
+      font-weight: 300;
+    }
+    .story-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: rgba(239,178,74,0.85);
+      line-height: 1.7;
+      font-style: italic;
+      margin-top: 24px;
+      padding-left: 20px;
+      border-left: 2px solid var(--amber);
+    }
+
+    /* ─── FACTS ─── */
+    .facts {
+      background: var(--ivory);
+      padding: 100px 40px;
+    }
+    .facts .section-title { color: var(--text); }
+    .facts .section-sub { color: var(--text-light); }
+
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--amber);
+    }
+    .fact-item {
+      background: var(--stone);
+      padding: 44px 36px;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .fact-item:hover { background: white; }
+    .fact-icon { font-size: 2rem; margin-bottom: 20px; display: block; }
+    .fact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .fact-body {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ─── SUBMIT ─── */
+    .submit {
+      background: var(--dark);
+      padding: 100px 40px;
+    }
+    .submit .section-title { color: white; }
+    .submit .section-sub { color: rgba(255,255,255,0.45); }
+
+    .submit-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--dark-2);
+      padding: 72px 64px;
+      border: 1px solid rgba(212,137,30,0.15);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      border: 1px solid rgba(212,137,30,0.2);
+      border-bottom: 1px solid rgba(212,137,30,0.4);
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: white;
+      background: rgba(255,255,255,0.04);
+      outline: none;
+      transition: border-color 0.3s, background 0.3s;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--amber);
+      background: rgba(212,137,30,0.05);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-group select { color: rgba(255,255,255,0.6); }
+    .form-group select option { background: var(--dark-2); color: white; }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit { text-align: center; margin-top: 16px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #060401;
+      padding: 60px 40px;
+      text-align: center;
+      border-top: 1px solid rgba(212,137,30,0.1);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--amber); }
+    .footer-tagline {
+      color: rgba(255,255,255,0.25);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--amber); }
+    .footer-copy { color: rgba(255,255,255,0.15); font-size: 0.72rem; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .stat-item { padding: 8px 24px; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 120px 24px 80px; }
+      section { padding: 72px 24px !important; }
+      .artists, .stories, .facts, .submit { padding: 72px 24px; }
+      .submit-inner { padding: 44px 28px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .stats-bar { gap: 16px 0; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(12,10,7,0.1); padding: 16px 0; width: 50%; }
+      .stat-item:nth-child(odd) { border-right: 1px solid rgba(12,10,7,0.1); }
+      .btn-outline { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BANNER -->
+  <div class="banner">New profiles added weekly · 200+ artists documented · Every genre covered</div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo"><span>busk</span>.co</a>
+    <ul class="nav-links">
+      <li><a href="#artists">Artists</a></li>
+      <li><a href="#stories">Stories</a></li>
+      <li><a href="#facts">Why Busk</a></li>
+      <li><a href="#submit">Submit</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <p class="hero-eyebrow">The Street · The Story · The Stars</p>
+    <h1>Before the <em>stadium lights</em>,<br>there was the street.</h1>
+    <p class="hero-sub">A celebration of the musicians, comedians and performers who started from nothing — busking for coins before the world heard their name.</p>
+    <div class="hero-cta">
+      <a href="#artists" class="btn-primary">Explore the Artists</a>
+      <a href="#stories" class="btn-outline">Read the Stories</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-number">200+</span>
+      <span class="stat-label">Artists Documented</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">45</span>
+      <span class="stat-label">Countries</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">80yrs</span>
+      <span class="stat-label">Of Street History</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">Every</span>
+      <span class="stat-label">Genre Represented</span>
+    </div>
+  </div>
+
+  <!-- ARTISTS GRID -->
+  <section class="artists" id="artists">
+    <p class="section-eyebrow">Hall of Fame</p>
+    <div class="amber-rule"></div>
+    <h2 class="section-title">Famous Faces Who Started on the Street</h2>
+    <p class="section-sub">Every name below sold out arenas, won Grammys, or became a household name. Every name below also stood on a pavement — guitar case open, coins slowly filling.</p>
+
+    <div class="artists-grid">
+
+      <div class="artist-card reveal">
+        <p class="artist-era">London · 2004–2009</p>
+        <h3 class="artist-name">Ed Sheeran</h3>
+        <p class="artist-location">Soho, London & Norwich city centre</p>
+        <p class="artist-bio">Sheeran started sleeping on friends' sofas and Underground station benches, busking Soho's streets from age 14. His loop-pedal technique — layering beats and melodies live — was perfected on the street before any studio got a look in.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Guitar · Vocals</span>
+          <span class="tag">Loop Pedal</span>
+          <span class="tag">Folk-Pop</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">Cambridge, MA · 1982–1987</p>
+        <h3 class="artist-name">Tracy Chapman</h3>
+        <p class="artist-location">Harvard Square, Cambridge Massachusetts</p>
+        <p class="artist-bio">A student at Tufts, Chapman spent her evenings on the red-brick square that Harvard's students cross daily — playing her acoustic guitar for anyone who would stop. "Fast Car" was written in a dorm room and tested on a street corner before it ever touched a stage.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Acoustic Guitar</span>
+          <span class="tag">Folk</span>
+          <span class="tag">Harvard Square</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">Dublin · 1985–1996</p>
+        <h3 class="artist-name">Glen Hansard</h3>
+        <p class="artist-location">Grafton Street, Dublin City Centre</p>
+        <p class="artist-bio">Hansard dropped out of school at 13 and busked Grafton Street for eleven years. Same stretch of pavement. Every day. He eventually got the lead role in <em>The Commitments</em>, formed The Frames, and wrote "Falling Slowly" — which won an Oscar. He still busks occasionally, just because.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Guitar · Vocals</span>
+          <span class="tag">Grafton Street</span>
+          <span class="tag">11 Years</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">San Diego → Seattle · 1993–1994</p>
+        <h3 class="artist-name">Jewel</h3>
+        <p class="artist-location">San Diego streets and coffeehouses</p>
+        <p class="artist-bio">Living in her car after a kidney infection cost her ability to pay rent, Jewel busked San Diego's streets to eat. A local coffee house owner let her perform weekly. That residency led to a record deal, and <em>Pieces of You</em> went on to sell 12 million copies.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Guitar · Yodeling</span>
+          <span class="tag">Folk-Pop</span>
+          <span class="tag">Living in Her Van</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">New York City · 1987–1991</p>
+        <h3 class="artist-name">Beck</h3>
+        <p class="artist-location">Lower East Side & Washington Square Park, NYC</p>
+        <p class="artist-bio">Beck arrived in New York with a handful of recordings and very little money. He busked the Lower East Side and folk clubs before a demo of "Loser" reached a small label. His street-corner folk experimentation went on to define alt-rock's mid-90s reinvention.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Acoustic Guitar</span>
+          <span class="tag">Lo-fi Folk</span>
+          <span class="tag">Lower East Side</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">Paris · 1988–1993</p>
+        <h3 class="artist-name">Madeleine Peyroux</h3>
+        <p class="artist-location">Left Bank, Paris & Montmartre</p>
+        <p class="artist-bio">An American teenager in Paris, Peyroux busked the Left Bank with a jazz band at 16 — drawing comparisons to Billie Holiday from passers-by who couldn't believe the voice coming out of someone so young. She disappeared for years, resurfaced in the late 90s, and became one of jazz's most distinctive voices.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Jazz Vocals</span>
+          <span class="tag">Guitar</span>
+          <span class="tag">Paris Left Bank</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">New York & D.C. · Mid-1980s</p>
+        <h3 class="artist-name">Dave Chappelle</h3>
+        <p class="artist-location">NYC Subway & Washington D.C. streets</p>
+        <p class="artist-bio">Before <em>Half Baked</em> and before $50 million Netflix deals, Chappelle was a teenager doing stand-up comedy on New York sidewalks and the DC streets he grew up around. The craft of reading a street crowd — figuring out what makes strangers stop — never left him.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Stand-Up Comedy</span>
+          <span class="tag">Street Performance</span>
+          <span class="tag">D.C. & NYC</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">New York City · 1972–1978</p>
+        <h3 class="artist-name">Sugar Blue</h3>
+        <p class="artist-location">NYC Subway & Washington Square Park</p>
+        <p class="artist-bio">James Whiting — Sugar Blue — busked New York's subway tunnels for six years. A Paris street encounter with a Rolling Stones associate led to him recording the harmonica hook on "Miss You." That harmonica line reached number one in 1978. He went from subway tunnels to the studio in under a year.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Harmonica</span>
+          <span class="tag">Blues</span>
+          <span class="tag">Rolling Stones · Miss You</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">Europe · 1998–2000</p>
+        <h3 class="artist-name">Damien Rice</h3>
+        <p class="artist-location">Rome, Tuscany & Dublin</p>
+        <p class="artist-bio">Rice walked away from a major record deal with Juniper (the band he'd been in for years), bought a backpack, and busked his way across Italy. He lived on farms, played on street corners, and found the songs that would eventually become <em>O</em> — one of the most critically admired folk albums of the 2000s.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Guitar · Vocals</span>
+          <span class="tag">Folk</span>
+          <span class="tag">Quit Major Label to Busk</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">Brighton & London · 2003–2009</p>
+        <h3 class="artist-name">Passenger</h3>
+        <p class="artist-location">Brighton city centre & London streets</p>
+        <p class="artist-bio">Mike Rosenberg spent years busking British streets after his first band broke up. Rather than quit, he doubled down — playing longer hours on more corners. The songs he wrote during those years included "Let Her Go," which hit number one in 19 countries. He's gone back to busking since, partly for fun.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Acoustic Guitar</span>
+          <span class="tag">Singer-Songwriter</span>
+          <span class="tag">Brighton Streets</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">Chicago · 1930s–1940s</p>
+        <h3 class="artist-name">Arthur "Big Boy" Crudup</h3>
+        <p class="artist-location">Maxwell Street, Chicago</p>
+        <p class="artist-bio">Crudup arrived in Chicago homeless, slept under the El tracks, and busked Maxwell Street for years — a chaotic outdoor market that served as the city's blues school. He wrote "That's All Right," which Elvis Presley chose as his very first single. Big Boy never saw meaningful royalties. Elvis sold millions.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Blues Guitar</span>
+          <span class="tag">Maxwell Street</span>
+          <span class="tag">Wrote Elvis's First Single</span>
+        </div>
+      </div>
+
+      <div class="artist-card reveal">
+        <p class="artist-era">Cambridge, MA · 1980s</p>
+        <h3 class="artist-name">Annie Raines</h3>
+        <p class="artist-location">Harvard Square & Central Square, Cambridge</p>
+        <p class="artist-bio">One of the great harmonica players of her generation, Raines spent her early years busking Boston and Cambridge's street corners — not as a student but as a working musician learning her craft in public. The Boston busking scene of the 80s shaped her style as much as any formal training could have.</p>
+        <div class="artist-tags">
+          <span class="tag primary">Harmonica</span>
+          <span class="tag">Blues</span>
+          <span class="tag">Cambridge Streets</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STORIES -->
+  <section class="stories" id="stories">
+    <p class="section-eyebrow">The Stories</p>
+    <div class="amber-rule"></div>
+    <h2 class="section-title" style="color:white;">More Than a Coin in a Hat</h2>
+    <p class="section-sub">Three stories that show what the street actually teaches — and what it takes away.</p>
+
+    <div class="stories-grid">
+
+      <div class="story-card reveal">
+        <div class="story-number">01</div>
+        <p class="story-artist">Glen Hansard · Dublin · 1985–1996</p>
+        <h3 class="story-title">Eleven Years on the Same Corner</h3>
+        <p class="story-text">Most buskers move on. They try it for a season, decide the money's not worth it, and find a stage or a job. Glen Hansard stayed. He dropped out of school at 13, took a spot on Grafton Street, and played it — through rain, through winters, through the years when nobody noticed — for over a decade.<br><br>Grafton Street made him read crowds faster than any drama school could. It taught him that a song either reaches people in the first eight bars or it doesn't. By the time the film work came, by the time he won an Oscar for "Falling Slowly," the rawness was all still there. You don't play a street for eleven years and lose it.</p>
+        <p class="story-quote">"The street teaches you to connect. You've got three seconds before someone keeps walking. That's the most honest feedback you'll ever get."</p>
+      </div>
+
+      <div class="story-card reveal">
+        <div class="story-number">02</div>
+        <p class="story-artist">Sugar Blue · New York · 1972–1978</p>
+        <h3 class="story-title">From the Subway to the Rolling Stones</h3>
+        <p class="story-text">James Whiting — who busked under the name Sugar Blue — played harmonica in New York's subway tunnels for six years. Not as a stepping stone. Not as a strategy. He was a working busker who played because he was good and because it paid enough to get by.<br><br>In Paris on a busking trip, a Rolling Stones associate heard him play and brought him to Mick Jagger. Within weeks, Whiting was in a recording studio adding the harmonica line to "Miss You." That line — bright, bluesy, instantly recognisable — became one of the most famous harmonica hooks in rock and roll. It reached number one in 1978. He went from tunnel to Top 40 in under a year.</p>
+        <p class="story-quote">"I wasn't trying to be discovered. I was just playing. The street had taught me everything I needed — including how to play for people who don't know your name."</p>
+      </div>
+
+      <div class="story-card reveal">
+        <div class="story-number">03</div>
+        <p class="story-artist">Damien Rice · Europe · 1998–2000</p>
+        <h3 class="story-title">The Label Drop, the Backpack, the Songs</h3>
+        <p class="story-text">Damien Rice had a record deal. His band Juniper had been signed, had recorded, had done what most musicians spend years trying to do. Then he walked away from it. He bought a backpack, flew to Italy, and busked his way across the country for two years — playing piazzas and street corners in Rome and Tuscany, working on farms between gigs.<br><br>The songs he wrote during those years — "Volcano," "Cannonball," "The Blower's Daughter" — became <em>O</em>, released in 2002. It is now considered one of the most important folk albums of its era. Busking didn't save his career. It started it over, from the ground up, exactly as it should have.</p>
+        <p class="story-quote">"I needed to disappear. The best thing I ever did was stop trying to be a musician and just be one."</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FACTS -->
+  <section class="facts" id="facts">
+    <p class="section-eyebrow">Why Busking Matters</p>
+    <div class="amber-rule"></div>
+    <h2 class="section-title">What the Street Actually Teaches</h2>
+    <p class="section-sub">It's not the coins. It's never the coins. Here's what busking actually gives you — and takes away.</p>
+
+    <div class="facts-grid">
+      <div class="fact-item reveal">
+        <span class="fact-icon">👁</span>
+        <h3 class="fact-title">Unfiltered Feedback</h3>
+        <p class="fact-body">A packed club is full of people who already like you. A busy street is full of people who don't. Every song is an audition. That brutality makes you sharper, faster, better — or it ends you early.</p>
+      </div>
+      <div class="fact-item reveal">
+        <span class="fact-icon">🎵</span>
+        <h3 class="fact-title">Songs That Work</h3>
+        <p class="fact-body">Street crowds stop for hooks, not atmosphere. Musicians who have busked write differently — they know instinctively when a melody lands. You can hear it in Glen Hansard, in Ed Sheeran, in Tracy Chapman. The streets made those choruses inevitable.</p>
+      </div>
+      <div class="fact-item reveal">
+        <span class="fact-icon">🌍</span>
+        <h3 class="fact-title">A Genuinely Global Tradition</h3>
+        <p class="fact-body">From the griots of West Africa to the medieval troubadours of Europe, wandering musicians performing in public for donations is one of humanity's oldest art forms. Every continent. Every century. The pavement has always been a stage.</p>
+      </div>
+      <div class="fact-item reveal">
+        <span class="fact-icon">🏙</span>
+        <h3 class="fact-title">Cities That Shaped the Music</h3>
+        <p class="fact-body">New York's subway created a sound. Dublin's Grafton Street created another. The Paris Left Bank was a school for jazz and folk. Boston's Harvard Square is its own genre. Where you busk doesn't just shape your crowd — it shapes your music.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMIT -->
+  <section class="submit" id="submit">
+    <p class="section-eyebrow">Contribute</p>
+    <div class="amber-rule" style="background:var(--amber)"></div>
+    <h2 class="section-title">Know a busker we've missed?</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.45)">The database is always growing. Submit a name, a story, a street corner — and we'll research and add them to the archive.</p>
+    <div class="submit-inner reveal">
+      <form>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Artist Name</label>
+            <input type="text" placeholder="e.g. Joni Mitchell" />
+          </div>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Optional" />
+          </div>
+          <div class="form-group">
+            <label>Where Did They Busk?</label>
+            <input type="text" placeholder="City, country, or specific spot" />
+          </div>
+          <div class="form-group">
+            <label>Era</label>
+            <select>
+              <option value="">Approximate years…</option>
+              <option>1940s–1950s</option>
+              <option>1960s–1970s</option>
+              <option>1980s</option>
+              <option>1990s</option>
+              <option>2000s</option>
+              <option>2010s</option>
+              <option>2020s</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Their Story</label>
+            <textarea placeholder="What do you know about their busking? Any sources, anecdotes, or specific locations? Even a one-line tip helps us research further…"></textarea>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-primary" style="border:none;cursor:pointer;font-family:'Inter',sans-serif;">Submit This Artist</button>
+          <p style="margin-top:16px;font-size:0.76rem;color:rgba(255,255,255,0.2);letter-spacing:0.05em;">We research every submission before adding to the archive · No spam, ever</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo"><span>busk</span>.co</p>
+    <p class="footer-tagline">Before the Stadium Lights, There Was the Street</p>
+    <div class="footer-links">
+      <a href="#artists">Artists</a>
+      <a href="#stories">Stories</a>
+      <a href="#facts">Why Busk</a>
+      <a href="#submit">Submit an Artist</a>
+      <a href="mailto:hello@busk.co">hello@busk.co</a>
+    </div>
+    <p class="footer-copy">© 2026 Busk.co · Celebrating street performance, one story at a time.</p>
+  </footer>
+
+  <script>
+    // Sticky nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
